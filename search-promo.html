@@ -151,14 +151,14 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">View Promotion</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Search Promotion</h1>
 
                     <div class="row">
                         <!-- DataTales Example -->
                         <div class="col-lg-12">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Promotions</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Promotion</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -181,6 +181,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <form class="user" id="promoForm">
+                                <div class="form-group">
+                                    <label for="code">Code: </label>
+                                    <input type="text" class="form-control form-control-user" id="code"
+                                        placeholder="e.g. xmas101">
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" id="searchPromoBtn" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -256,47 +266,54 @@
             $('.container-fluid')
                 .append("<label>" + message + "</label>");
         }
-        
+
         // TO-DO:
         // To END promotion
         // $('')
 
-        // GET all promotions
-        $(async () => {
-            var serviceURL = "http://127.0.0.1:5100/";
+        // GET specific promotion
+        // TO-DO: clear table if search agn
+        $('#searchPromoBtn').click(function () {
+            var code = $('#code').val();
+            console.log(code);
 
-            try {
-                const response = await fetch(serviceURL + "retrieve", {
-                    method: 'GET'
-                });
+            var serviceURL = "http://127.0.0.1:5100/retrieve/" + code;
+            $(async () => {
 
-                const promotions = await response.json();
-                console.log(promotions);
+                try {
+                    const response = await fetch(serviceURL, {
+                        method: 'GET'
+                    });
 
-                if (!promotions || !promotions.length) {
-                    showError("Promotion list is empty or undefined!")
-                } else {
-                    // for loop to setup all table rows with obtained promotions data
-                    var rows = "";
-                    for (const promo of promotions) {
-                        eachRow =
-                            "<td>" + promo.code + "</td>" +
-                            "<td>" + promo.name + "</td>" +
-                            "<td>" + promo.discount + "</td>" +
-                            "<td>" + promo.message + "</td>" +
-                            "<td>" + promo.start + "</td>" +
-                            "<td>" + promo.end + "</td>" +
-                            "<td>" + promo.redemptions + "</td>" +
-                            "<td>" + promo.tiers + "</td>" +
-                            "<td><button type='button' class='btn btn-danger'>End</button></td>";
-                        rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
-                    }
-                    // add all the rows to the table
-                    $('#promotable').append(rows);
+                    const promo = await response.json();
+                    console.log(promo);
+
+                    if (!promo) {
+                        showError("Promotion list is empty or undefined!")
+                    } else {
+                        // for loop to setup all table rows with obtained promotions data
+                        var rows = "";
+                            eachRow =
+                                "<td>" + promo.code + "</td>" +
+                                "<td>" + promo.name + "</td>" +
+                                "<td>" + promo.discount + "</td>" +
+                                "<td>" + promo.message + "</td>" +
+                                "<td>" + promo.start + "</td>" +
+                                "<td>" + promo.end + "</td>" +
+                                "<td>" + promo.redemptions + "</td>" +
+                                "<td>" + promo.tiers + "</td>" +
+                                "<td><button type='button' class='btn btn-danger'>End</button></td>";
+                            rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+                        
+                        // add all the rows to the table
+                        $('#promotable').append(rows);
+                     }
+                } catch (error) {
+                    showError(
+                        "There is a problem retrieving promotions, please try again later. <br />" +
+                        error);
                 }
-            } catch (error) {
-                showError("There is a problem retrieving promotions, please try again later. <br />" + error);
-            }
+            });
         });
     </script>
 

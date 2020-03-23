@@ -151,7 +151,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">View Promotion</h1>
+                    <h1 class="h3 mb-2 text-gray-800">View All Promotions</h1>
 
                     <div class="row">
                         <!-- DataTales Example -->
@@ -263,10 +263,10 @@
 
         // GET all promotions
         $(async () => {
-            var serviceURL = "http://127.0.0.1:5100/";
+            var serviceURL = "http://127.0.0.1:5100/retrieve";
 
             try {
-                const response = await fetch(serviceURL + "retrieve", {
+                const response = await fetch(serviceURL, {
                     method: 'GET'
                 });
 
