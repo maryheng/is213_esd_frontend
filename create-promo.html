@@ -33,7 +33,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-oil-can fa-3x"></i>
+                    <i class="fas fa-oil-can fa-3x"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Jiayous Console</sup></div>
             </a>
@@ -44,29 +44,31 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
             </li>
 
             <!-- Nav Item - Promotions Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-money-bill-alt"></i>
-                <span>Promotion</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-money-bill-alt"></i>
+                    <span>Promotion</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="view-promo.html">View Promotions</a>
-                    <a class="collapse-item" href="create-promo.html">Create Promotion</a>
-                </div>
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="view-promo.html">View All Promotions</a>
+                        <a class="collapse-item" href="search-promo.html">Search Promotion</a>
+                        <a class="collapse-item" href="create-promo.html">Create Promotion</a>
+                    </div>
                 </div>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="broadcast.html">
-                <i class="fas fa-bullhorn"></i>
-                <span>Broadcast</span></a>
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Broadcast</span></a>
             </li>
 
             <!-- Divider -->
@@ -121,20 +123,22 @@
                             </div>
                         </li>
 
-                    <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bao Xian</span>
-                        <img class="img-profile rounded-circle" src="img/ricardo.jpeg">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
-                        </a>
-                        </div>
-                    </li>
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bao Xian</span>
+                                <img class="img-profile rounded-circle" src="img/ricardo.jpeg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
 
                     </ul>
 
@@ -146,7 +150,7 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Create Promotion</h1>
 
-                    <div class="row">
+                    <div class="row justify-content-center align-items-center">
 
                         <!-- Add a Promotion Card -->
                         <div class="col-lg-6">
@@ -155,44 +159,50 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Create Promotion</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form class="user">
+                                    <form class="user" id="promoForm">
                                         <div class="form-group">
-                                            <label for="email">Discount (%): </label>
-                                            <input type="text" class="form-control form-control-user"
-                                                id="promoName"
+                                            <label for="code">Code: </label>
+                                            <input type="text" class="form-control form-control-user" id="code"
+                                                placeholder="e.g. xmas101">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="discount">Discount (%): </label>
+                                            <input type="text" class="form-control form-control-user" id="discount"
                                                 placeholder="e.g. 10%">
                                         </div>
                                         <div class="form-group">
-                                            <label for="email">Name: </label>
-                                            <input type="text" class="form-control form-control-user"
-                                                id="promoName"
+                                            <label for="name">Name: </label>
+                                            <input type="text" class="form-control form-control-user" id="name"
                                                 placeholder="Xmas Promo">
                                         </div>
                                         <div class="form-group">
-                                            <label for="email">Start Date (yyyymmdd): </label>
-                                            <input type="text" class="form-control form-control-user"
-                                                id="promoName"
+                                            <label for="startdate">Start Date (yyyymmdd): </label>
+                                            <input type="text" class="form-control form-control-user" id="startdate"
                                                 placeholder="yyyymmdd">
                                         </div>
                                         <div class="form-group">
-                                            <label for="email">End Date (yyyymmdd): </label>
-                                            <input type="text" class="form-control form-control-user"
-                                                id="promoName"
+                                            <label for="enddate">End Date (yyyymmdd): </label>
+                                            <input type="text" class="form-control form-control-user" id="enddate"
                                                 placeholder="yyyymmdd">
                                         </div>
                                         <div class="form-group">
-                                            <label for="email">Message: </label>
-                                            <input type="text" class="form-control form-control-user"
-                                                id="promoName"
+                                            <label for="msg">Message: </label>
+                                            <input type="text" class="form-control form-control-user" id="msg"
                                                 placeholder="Enjoy 10% off selected petrols">
                                         </div>
                                         <div class="form-group">
-                                            <label for="text">Tiers: </label>
-                                            <input type="text" class="form-control form-control-user"
-                                                id="promoVal" placeholder="1,2,3">
+                                            <label for="redemptions">Redemptions: </label>
+                                            <input type="text" class="form-control form-control-user" id="redemptions"
+                                                placeholder="50">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tiers">Tiers: </label>
+                                            <input type="text" class="form-control form-control-user" id="tiers"
+                                                placeholder="1,2,3">
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn-primary">Create</button>
+                                            <button type="button" id="createPromoBtn"
+                                                class="btn btn-primary">Create</button>
                                         </div>
                                     </form>
 
@@ -256,6 +266,57 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <script>
+        // Helper function to display error message
+        function showError(message) {
+            // Display an error under the main container
+            $('.container-fluid')
+                .append("<label>" + message + "</label>");
+        }
+
+        // Post promotion details
+        $('#createPromoBtn').click(function () {
+            var code = $('#code').val();
+            var discount = $('#discount').val();
+            var name = $('#name').val();
+            var start = $('#startdate').val();
+            var end = $('#enddate').val();
+            var message = $('#msg').val();
+            var tiers = $('#tiers').val();
+            var redemptions = $('#redemptions').val();
+            console.log(tiers);
+            tiers = tiers.split(",");
+            var tierArr = [];
+            for (tier of tiers) {
+                tier = parseInt(tier);
+                tierArr.push(tier);
+            }
+
+            console.log(tiers);
+            console.log(JSON.stringify($('form').serializeArray()));
+            console.log("-----------");
+            var body = JSON.stringify({ discount: parseInt(discount), name: name, start: start, end: end, message: message, redemptions: parseInt(redemptions), tiers: tierArr});
+            console.log(body);
+
+            var serviceURL = "http://127.0.0.1:5100/create/" + code;
+
+            $(async () => {
+                try {
+                    const response = await fetch (serviceURL, {
+                        method: 'POST',
+                        headers: {"Content-Type": "application/json"},
+                        body: body
+                    });
+
+                    const data = await response.json();
+                } catch (error) {
+                    showError
+                ('There is a problem sending promotion data, please try again later.<br />'+error);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
