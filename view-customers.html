@@ -172,22 +172,13 @@
                                                     <th>point</th>
                                                     <th>tele_id</th>
                                                     <th>telehande</th>
+                                                    <th>tier</th>
                                                 </tr>
                                             </thead>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <form class="user" id="promoForm">
-                                <div class="form-group">
-                                    <label for="code">Code: </label>
-                                    <input type="text" class="form-control form-control-user" id="code"
-                                        placeholder="e.g. xmas101">
-                                </div>
-                                <div class="text-center">
-                                    <button type="button" id="searchPromoBtn" class="btn btn-primary">Search</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
 
@@ -264,74 +255,24 @@
                 .append("<label>" + message + "</label>");
         }
 
-        // // TO-DO:
-        // // To END promotion
-        // // $('')
-        // $('#datatables').DataTable();
 
-        // // GET specific promotion
-        // // TO-DO: clear table if search agn
-        // $('#searchPromoBtn').click(function () {
-        //     var code = $('#code').val();
-        //     console.log(code);
-
-        //     var serviceURL = "http://127.0.0.1:5100/retrieve/" + code;
-        //     $(async () => {
-
-        //         try {
-        //             const response = await fetch(serviceURL, {
-        //                 method: 'GET'
-        //             });
-
-        //             const promo = await response.json();
-        //             console.log(promo);
-
-        //             if (!promo) {
-        //                 showError("Promotion list is empty or undefined!")
-        //             } else {
-        //                 // for loop to setup all table rows with obtained promotions data
-        //                 var rows = "";
-        //                     eachRow =
-        //                         "<td>" + promo.code + "</td>" +
-        //                         "<td>" + promo.name + "</td>" +
-        //                         "<td>" + promo.discount + "</td>" +
-        //                         "<td>" + promo.message + "</td>" +
-        //                         "<td>" + promo.start + "</td>" +
-        //                         "<td>" + promo.end + "</td>" +
-        //                         "<td>" + promo.redemptions + "</td>" +
-        //                         "<td>" + promo.tiers + "</td>" +
-        //                         "<td><button type='button' class='btn btn-danger'>End</button></td>";
-        //                     rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
-
-        //                 // add all the rows to the table
-        //                 $('#promotable').append(rows);
-        //              }
-        //         } catch (error) {
-        //             showError(
-        //                 "There is a problem retrieving promotions, please try again later. <br />" +
-        //                 error);
-        //         }
-        //     });
-        // });
-
-
-        $(document).ready(function () {
-            $('#usertable').DataTable({
-                "ajax": {
-                    'url': "http://127.0.0.1:5300/view",
-                    "dataSrc": ""
-                },
-                "columns": [
-                    {"data": "user_id"},
-                    {"data": "name"},
-                    {"data": "email"},
-                    {"data":"exp"},
-                    {"data": "point"},
-                    {"data": "tele_id"},
-                    {"data": "telehande"}
-                ]
-            });
+        $('#usertable').DataTable({
+            "ajax": {
+                'url': "http://127.0.0.1:5300/view",
+                "dataSrc": ""
+            },
+            "columns": [
+                {"data": "user_id"},
+                {"data": "name"},
+                {"data": "email"},
+                {"data":"exp"},
+                {"data": "point"},
+                {"data": "tele_id"},
+                {"data": "telehande"},
+                {"data": "tier"}
+            ]
         });
+
     </script>
 
 </body>
