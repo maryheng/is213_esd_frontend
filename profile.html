@@ -11,22 +11,14 @@
 
     <title>Jiayous</title>
 
-    <!-- Custom fonts for this template -->
+    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-
-
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -34,61 +26,6 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-oil-can fa-3x"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Jiayous Console</sup></div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Nav Item - Promotions Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-money-bill-alt"></i>
-                    <span>Promotion</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="view-promo.html">View All Promotions</a>
-                        <a class="collapse-item" href="search-promo.html">Search Promotion</a>
-                        <a class="collapse-item" href="create-promo.html">Create Promotion</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item active">
-                <a class="nav-link" href="broadcast.html">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Broadcast</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
-        <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -98,6 +35,13 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                        <div class="sidebar-brand-icon rotate-n-15">
+                            <i class="fas fa-oil-can fa-2x"></i>
+                        </div>
+                        <div class="sidebar-brand-text mx-3"><b>JIAYOUS</b></div>
+                    </a>
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -135,12 +79,20 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bao Xian</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ricardo</span>
                                 <img class="img-profile rounded-circle" src="img/ricardo.jpeg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="/profile.html">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="/profile.html">
+                                    <i class="fas fa-oil-can fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Pump Petrol
+                                </a>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -155,41 +107,85 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Broadcast</h1>
-                    <p class="mb-4">Notify to selected channels</p>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h2 mb-0 text-gray-800">My Account</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h4 mb-0 text-gray-800">Welcome Ricardo,</h1>
+                    </div>
 
-                    <div class="row">
-
-                        <!-- Broadcasr Card -->
-                        <div class="col-lg-12">
+                    <!-- Loyalty Points -->
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-m font-weight-bold text-primary mb-1">Points</div>
+                                            <div class="h3 mb-0 font-weight-bold text-gray-800">100</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-money-check-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-m font-weight-bold text-primary mb-1">Experience</div>
+                                            <div class="h3 mb-0 font-weight-bold text-gray-800">100</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-money-check-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <!-- Profile Details -->
+                        <div class="col-lg-6">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Send Notification</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
                                 </div>
                                 <div class="card-body">
                                     <form class="user" id="notifyForm">
                                         <div class="form-group">
-                                            <label for="channels">Channels: </label>
-                                            <input type="text" class="form-control form-control-user" id="channels"
-                                                placeholder="telegram">
+                                            <label for="name">Name: </label>
+                                            <input type="text" class="form-control form-control-user" id="name"
+                                                placeholder="" disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label for="promoDetails">Promotion Details: </label>
-                                            <select id="promoPicker" class="selectpicker" show-tick data-width="100%">
-                                            </select>
-
+                                            <label for="telehandle">Telegram Handle: </label>
+                                            <input type="text" class="form-control form-control-user" id="telehandle"
+                                                placeholder="" disabled>
                                         </div>
                                         <div class="form-group">
-                                            <label for="message">Message: </label>
-                                            <input type="text" class="form-control form-control-user" id="message"
-                                                placeholder="10% off!">
+                                            <label for="email">Email: </label>
+                                            <input type="text" class="form-control form-control-user" id="email"
+                                                placeholder="" disabled>
                                         </div>
-                                        <div class="text-center">
-                                            <button type="button" id="notifyBtn" class="btn btn-primary">Send</button>
+                                        <div class="form-group">
+                                            <label for="tele_id">Telegram ID: </label>
+                                            <input type="text" class="form-control form-control-user" id="tele_id"
+                                                placeholder="" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tier">Tier(s): </label>
+                                            <input type="text" class="form-control form-control-user" id="tier"
+                                                placeholder="" disabled>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -204,7 +200,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2019</span>
+                        <span>Copyright &copy; Jiayous 2020</span>
                     </div>
                 </div>
             </footer>
@@ -248,18 +244,7 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-
     <script>
-        var promotions;
-
         // Helper function to display error message
         function showError(message) {
             // Display an error under the main container
@@ -267,8 +252,7 @@
                 .append("<label>" + message + "</label>");
         }
 
-        // Retrieve all promotions
-        let allpromotions;
+        // GET user details
         $(async () => {
             var serviceURL = "http://127.0.0.1:5100/retrieve";
 
@@ -277,66 +261,34 @@
                     method: 'GET'
                 });
 
-                var promotions = await response.json();
-                allpromotions = promotions;
+                const promotions = await response.json();
                 console.log(promotions);
 
                 if (!promotions || !promotions.length) {
                     showError("Promotion list is empty or undefined!")
                 } else {
+                    // for loop to setup all table rows with obtained promotions data
+                    var rows = "";
                     for (const promo of promotions) {
                         eachRow =
-                            "<option>" + promo.name + "</option>";
-                        $('#promoPicker').append(eachRow);
+                            "<td>" + promo.code + "</td>" +
+                            "<td>" + promo.name + "</td>" +
+                            "<td>" + promo.discount + "</td>" +
+                            "<td>" + promo.message + "</td>" +
+                            "<td>" + promo.start + "</td>" +
+                            "<td>" + promo.end + "</td>" +
+                            "<td>" + promo.redemptions + "</td>" +
+                            "<td>" + promo.tiers + "</td>" +
+                            "<td><button type='button' class='btn btn-danger'>End</button></td>";
+                        rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
                     }
+                    // add all the rows to the table
+                    $('#promotable').append(rows);
                 }
-                return promotions;
             } catch (error) {
                 showError("There is a problem retrieving promotions, please try again later. <br />" +
                     error);
             }
-        });
-
-
-        // Post notification details
-        $('#notifyBtn').click(function () {
-            var selectedPromo = $('select').val();
-            let promodeets = allpromotions.find(el => el.name === selectedPromo);
-
-            var channels = $('#channels').val();
-            var promoDetails = promodeets;
-            var message = $('#message').val();
-
-            channels = channels.split(",");
-
-            var body = JSON.stringify({
-                channels: channels,
-                promoDetails: promoDetails,
-                message: message
-            });
-
-            console.log(body);
-
-            // Post notification to selected channels
-            var serviceURL = "http://127.0.0.1:5100/sendNotification";
-
-            $(async () => {
-                try {
-                    const response = await fetch(serviceURL, {
-                        method: 'POST',
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: body
-                    });
-
-                    const data = await response.json();
-                } catch (error) {
-                    showError
-                        ('There is a problem sending promotion data, please try again later.<br />' +
-                            error);
-                }
-            });
         });
     </script>
 </body>
