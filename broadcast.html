@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Petrol Kiosk</title>
+    <title>Jiayous</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,6 +19,11 @@
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -53,15 +58,16 @@
 
             <!-- Nav Item - Promotions Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-money-bill-alt"></i>
-                <span>Promotion</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-money-bill-alt"></i>
+                    <span>Promotion</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="view-promo.html">View Promotions</a>
-                    <a class="collapse-item" href="create-promo.html">Create Promotion</a>
-                </div>
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="view-promo.html">View Promotions</a>
+                        <a class="collapse-item" href="create-promo.html">Create Promotion</a>
+                    </div>
                 </div>
             </li>
 
@@ -124,20 +130,22 @@
                             </div>
                         </li>
 
-                    <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bao Xian</span>
-                        <img class="img-profile rounded-circle" src="img/ricardo.jpeg">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
-                        </a>
-                        </div>
-                    </li>
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bao Xian</span>
+                                <img class="img-profile rounded-circle" src="img/ricardo.jpeg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
 
                     </ul>
 
@@ -147,7 +155,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Notifications</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Broadcast</h1>
                     <p class="mb-4">Notify to selected channels</p>
 
                     <div class="row">
@@ -159,24 +167,25 @@
                                     <h6 class="m-0 font-weight-bold text-primary">Send Notification</h6>
                                 </div>
                                 <div class="card-body">
-                                    <form class="user">
+                                    <form class="user" id="notifyForm">
                                         <div class="form-group">
-                                            <label for="email">Promotion: </label>
-                                            <input type="text" class="form-control form-control-user" id="promoName"
-                                                placeholder="">
+                                            <label for="channels">Channels: </label>
+                                            <input type="text" class="form-control form-control-user" id="channels"
+                                                placeholder="telegram">
                                         </div>
                                         <div class="form-group">
-                                            <label for="email">Channel: </label>
-                                            <input type="text" class="form-control form-control-user" id="promoName"
-                                                placeholder="">
+                                            <label for="promoDetails">Promotion Details: </label>
+                                            <select id="promoPicker" class="selectpicker" show-tick data-width="100%">
+                                            </select>
+
                                         </div>
                                         <div class="form-group">
-                                            <label for="text">Message: </label>
-                                            <input type="text" class="form-control form-control-user" id="promoVal"
-                                                placeholder="">
+                                            <label for="message">Message: </label>
+                                            <input type="text" class="form-control form-control-user" id="message"
+                                                placeholder="10% off!">
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn-primary">Send</button>
+                                            <button type="button" id="notifyBtn" class="btn btn-primary">Send</button>
                                         </div>
                                     </form>
 
@@ -235,9 +244,6 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
@@ -247,7 +253,91 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
+    <script>
+        var promotions;
+
+        // Helper function to display error message
+        function showError(message) {
+            // Display an error under the main container
+            $('.container-fluid')
+                .append("<label>" + message + "</label>");
+        }
+
+        // Retrieve all promotions
+        let allpromotions;
+        $(async () => {
+            var serviceURL = "http://127.0.0.1:5100/retrieve";
+
+            try {
+                const response = await fetch(serviceURL, {
+                    method: 'GET'
+                });
+
+                var promotions = await response.json();
+                allpromotions = promotions;
+                console.log(promotions);
+
+                if (!promotions || !promotions.length) {
+                    showError("Promotion list is empty or undefined!")
+                } else {
+                    for (const promo of promotions) {
+                        eachRow =
+                            "<option>" + promo.name + "</option>";
+                        $('#promoPicker').append(eachRow);
+                    }
+                }
+                return promotions;
+            } catch (error) {
+                showError("There is a problem retrieving promotions, please try again later. <br />" +
+                    error);
+            }
+        });
+
+
+        // Post notification details
+        $('#notifyBtn').click(function () {
+            var selectedPromo = $('select').val();
+            let promodeets = allpromotions.find(el => el.name === selectedPromo);
+
+            var channels = $('#channels').val();
+            var promoDetails = promodeets;
+            var message = $('#message').val();
+
+            channels = channels.split(",");
+
+            var body = JSON.stringify({
+                channels: channels,
+                promoDetails: promoDetails,
+                message: message
+            });
+
+            console.log(body);
+
+            // Post notification to selected channels
+            var serviceURL = "http://127.0.0.1:5100/sendNotification";
+
+            $(async () => {
+                try {
+                    const response = await fetch(serviceURL, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: body
+                    });
+
+                    const data = await response.json();
+                } catch (error) {
+                    showError
+                        ('There is a problem sending promotion data, please try again later.<br />' +
+                            error);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>Jiayous</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -163,42 +163,42 @@
                                         <div class="form-group">
                                             <label for="code">Code: </label>
                                             <input type="text" class="form-control form-control-user" id="code"
-                                                placeholder="e.g. xmas101">
+                                                placeholder="e.g. xmas101" required aria-required="true">
                                         </div>
                                         <div class="form-group">
                                             <label for="discount">Discount (%): </label>
-                                            <input type="text" class="form-control form-control-user" id="discount"
-                                                placeholder="e.g. 10%">
+                                            <input type="number" class="form-control form-control-user" id="discount"
+                                                placeholder="e.g. 10%" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Name: </label>
                                             <input type="text" class="form-control form-control-user" id="name"
-                                                placeholder="Xmas Promo">
+                                                placeholder="Xmas Promo" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="startdate">Start Date (yyyymmdd): </label>
-                                            <input type="text" class="form-control form-control-user" id="startdate"
-                                                placeholder="yyyymmdd">
+                                            <input type="datetime" class="form-control form-control-user" id="startdate"
+                                                placeholder="yyyymmdd" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="enddate">End Date (yyyymmdd): </label>
-                                            <input type="text" class="form-control form-control-user" id="enddate"
-                                                placeholder="yyyymmdd">
+                                            <input type="datetime" class="form-control form-control-user" id="enddate"
+                                                placeholder="yyyymmdd" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="msg">Message: </label>
                                             <input type="text" class="form-control form-control-user" id="msg"
-                                                placeholder="Enjoy 10% off selected petrols">
+                                                placeholder="Enjoy 10% off selected petrols" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="redemptions">Redemptions: </label>
                                             <input type="text" class="form-control form-control-user" id="redemptions"
-                                                placeholder="50">
+                                                placeholder="50" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="tiers">Tiers: </label>
                                             <input type="text" class="form-control form-control-user" id="tiers"
-                                                placeholder="1,2,3">
+                                                placeholder="1,2,3" required>
                                         </div>
                                         <div class="text-center">
                                             <button type="button" id="createPromoBtn"
@@ -268,6 +268,7 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <script>
+
         // Helper function to display error message
         function showError(message) {
             // Display an error under the main container
@@ -285,7 +286,7 @@
             var message = $('#msg').val();
             var tiers = $('#tiers').val();
             var redemptions = $('#redemptions').val();
-            console.log(tiers);
+
             tiers = tiers.split(",");
             var tierArr = [];
             for (tier of tiers) {
@@ -293,26 +294,34 @@
                 tierArr.push(tier);
             }
 
-            console.log(tiers);
-            console.log(JSON.stringify($('form').serializeArray()));
-            console.log("-----------");
-            var body = JSON.stringify({ discount: parseInt(discount), name: name, start: start, end: end, message: message, redemptions: parseInt(redemptions), tiers: tierArr});
+            var body = JSON.stringify({
+                discount: parseInt(discount),
+                name: name,
+                start: start,
+                end: end,
+                message: message,
+                redemptions: parseInt(redemptions),
+                tiers: tierArr
+            });
             console.log(body);
-
+            console.log(code);
             var serviceURL = "http://127.0.0.1:5100/create/" + code;
 
             $(async () => {
                 try {
-                    const response = await fetch (serviceURL, {
+                    const response = await fetch(serviceURL, {
                         method: 'POST',
-                        headers: {"Content-Type": "application/json"},
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
                         body: body
                     });
 
                     const data = await response.json();
                 } catch (error) {
                     showError
-                ('There is a problem sending promotion data, please try again later.<br />'+error);
+                        ('There is a problem sending promotion data, please try again later.<br />' +
+                            error);
                 }
             });
         });
