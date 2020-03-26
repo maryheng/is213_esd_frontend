@@ -17,6 +17,9 @@
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
     rel="stylesheet">
 
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.css" rel="stylesheet">
 
@@ -120,60 +123,34 @@
 
           </div>
 
-          <!-- Pick Your Petrol Card -->
+          <!-- Pick Your Petrol Section -->
           <div class="row align-items-center justify-content-center">
             <div class="col-lg-8 align-items-center justify-content-center">
               <div class="card text-white bg-primary mb-3 shadow mb-4">
                 <div class="card-body">
                   <h4 class="h4 mb-0"><b>Pick your petrol</b></h4>
                   <hr>
-                  <div class="row align-items-center justify-content-center ">
-                    <div class="col-sm-3">
-                      <div class="card text-gray-800">
-                        <div class="card-body">
-                          <h5 class="card-title">Basic X1</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                          </p>
-                          <div class="row align-items-center justify-content-center">
-                            <a href="#" class="btn btn-info">Pick Me</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="card text-gray-800">
-                        <div class="card-body">
-                          <h5 class="card-title">Cool X1</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                          </p>
-                          <div class="row align-items-center justify-content-center">
-                            <a href="#" class="btn btn-info">Pick Me</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="card text-gray-800">
-                        <div class="card-body">
-                          <h5 class="card-title">Fantastic X2</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                          </p>
-                          <div class="row align-items-center justify-content-center">
-                            <a href="#" class="btn btn-info">Pick Me</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <div id="petrolCard" class="row align-items-center justify-content-center ">
+
                   </div>
                   <br>
+
+                  <!-- Select Petrol Multiselect -->
+                  <div class="form-group">
+                    <label for="promoDetails">Promotion Details: </label>
+                    <select id="promoPicker" class="selectpicker" show-tick data-width="100%">
+                    </select>
+
+                  </div>
                   <!-- Amount of Oil Form -->
                   <h5 class="card-title">Amount of Oil</h5>
                   <form class="user">
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="oilAmountInput" placeholder="e.g. 10">
+                      <input type="text" class="form-control form-control-user" id="oilAmountInput"
+                        placeholder="e.g. 10">
                     </div>
                     <div class="text-center">
-                      <button type="button" class="btn btn-light">Send</button>
+                      <button type="button" id="pumpOilBtn" class="btn btn-light">Pump</button>
                     </div>
                   </form>
                 </div>
@@ -181,9 +158,24 @@
             </div>
           </div>
 
-          <div class="row align-items-center justify-content-center">
-            <div class="col-lg-8 align-items-center justify-content-center">
-              <div class="card text-white bg-dark mb-3 shadow mb-4">
+          <!-- Select Rewards Section -->
+          <div class="row align-items-center justify-content-center" style="display:none" id="amtCard">
+            <div class="col-lg-6 align-items-center justify-content-center">
+              <div class="card bg-light mb-3 shadow mb-4">
+                <div class="card-body">
+                  <h4 class="h4 mb-0"><b>Select Rewards</b></h4>
+                  <hr>
+
+                  <p>HELLO</p>
+                </div>
+              </div>
+            </div>
+      
+
+          <!-- Select Payment Method -->
+
+            <div class="col-lg-6 align-items-center justify-content-center">
+              <div class="card bg-light mb-3 shadow mb-4">
                 <div class="card-body">
                   <h4 class="h4 mb-0"><b>Amount To Pay</b></h4>
                   <hr>
@@ -244,9 +236,6 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
 
@@ -254,31 +243,89 @@
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
 
   <script>
-    $("#myCarousel").on("slide.bs.carousel", function (e) {
-      var $e = $(e.relatedTarget);
-      var idx = $e.index();
-      var itemsPerSlide = 3;
-      var totalItems = $(".carousel-item").length;
+    // Helper function to display error message
+    function showError(message) {
+      // Display an error under the main container
+      $('.container-fluid')
+        .append("<label>" + message + "</label>");
+    }
 
-      if (idx >= totalItems - (itemsPerSlide - 1)) {
-        var it = itemsPerSlide - (totalItems - idx);
-        for (var i = 0; i < it; i++) {
-          // append slides to end
-          if (e.direction == "left") {
-            $(".carousel-item")
-              .eq(i)
-              .appendTo(".carousel-inner");
-          } else {
-            $(".carousel-item")
-              .eq(0)
-              .appendTo($(this).find(".carousel-inner"));
-          }
+    // GET petrol types from petrol.py
+    let allOilTypes;
+    var getPetrolURL = 'http://127.0.0.1:5400/petrol';
+    var pumpOilURL = 'http://127.0.0.1:5400/pump';
+    $.ajax({
+        url: getPetrolURL,
+        dataType: 'json'
+      })
+      .done(function (data, textStatus, jqXHR) {
+        allOilTypes = data;
+        // dynamically adds a card depending on the petrol types
+        data.forEach(result => {
+          let content = `
+            <div class="col-sm-3">
+                <div class="card text-gray-800">
+                  <div id="oil3" class="card-body">
+                    <h5 class="card-title">${result.name}</h5>
+                    <p class="card-text">Rating: ${result.rating}
+                    </p>
+                    <p class="card-text">$${result.cost} /litre
+                    </p>
+                    <div class="row align-items-center justify-content-center">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          `;
+          $("#petrolCard").append(content);
+
+          // Append petrol type name to multiselect
+          eachRow = "<option>" + result.name + "</option>";
+          $('#promoPicker').append(eachRow);
+
+        })
+      })
+      .fail(function (jqXHR, textStatus, error) {
+        showError('Error: ' + error);
+      });
+
+    // Pump oil button -> jsonify data to send over to UPDATE oil amount
+    $("#pumpOilBtn").click(function () {
+      var oilamount = $('#oilAmountInput').val();
+      var oilname = $('select').val();
+
+      var body = JSON.stringify({
+        name: oilname,
+        amount: parseFloat(oilamount)
+      });
+
+      // Update OIL amount
+      $(async () => {
+        try {
+          const response = await fetch(pumpOilURL, {
+            method: 'PUT',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: body
+          });
+
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.log("ERROR BELOW!");
+          showError(error);
         }
-      }
+      });
+
+      $('#amtCard').show();
     });
   </script>
 </body>
