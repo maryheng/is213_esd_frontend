@@ -210,6 +210,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="container" id="errorcontainer">
+                        <label></label>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -272,20 +275,23 @@
         // Helper function to display error message
         function showError(message) {
             // Display an error under the main container
-            $('.container-fluid')
-                .append("<label>" + message + "</label>");
+            $('#errorcontainer label').text(message);
         }
+
+        // URLs
+        // var promotionsURL = "http://slippers.wtf:8000/promotions";
+        var promotionsURL = "http://127.0.0.1:5100/graphql";
 
         // Post promotion details
         $('#createPromoBtn').click(function () {
             var code = $('#code').val();
-            var discount = $('#discount').val();
+            var discount = parseInt($('#discount').val());
             var name = $('#name').val();
             var start = $('#startdate').val();
             var end = $('#enddate').val();
             var message = $('#msg').val();
             var tiers = $('#tiers').val();
-            var redemptions = $('#redemptions').val();
+            var redemptions = parseInt($('#redemptions').val());
 
             tiers = tiers.split(",");
             var tierArr = [];
@@ -294,36 +300,27 @@
                 tierArr.push(tier);
             }
 
-            var body = JSON.stringify({
-                discount: parseInt(discount),
-                name: name,
-                start: start,
-                end: end,
-                message: message,
-                redemptions: parseInt(redemptions),
-                tiers: tierArr
-            });
-            console.log(body);
-            console.log(code);
-            var serviceURL = "http://127.0.0.1:5100/create/" + code;
-
-            $(async () => {
-                try {
-                    const response = await fetch(serviceURL, {
-                        method: 'POST',
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: body
-                    });
-
-                    const data = await response.json();
-                } catch (error) {
-                    showError
-                        ('There is a problem sending promotion data, please try again later.<br />' +
-                            error);
+            // POST ajax to create promotions
+            $.post({
+                url: promotionsURL,
+                // data: JSON.stringify({ query: '{ promotions { code name discount message start end redemptions tiers } }' }),
+                data: JSON.stringify({ 
+                    query: '{ create (code: "' + code + '", discount: '+ discount +', name: "'+ name +'", redemptions: '+ redemptions +', start: "'+ start +'", end: "' + end +'", message: "' + message +'", tiers: ['+ tierArr +']) { message }}',
+                
+                variables: {code, discount, name, start, end, message, tierArr, redemptions}}),
+                contentType: 'application/json',
+                crossDomain: true,
+                cors: true,
+                headers: {'Bearer': '*' }
+            }).done(function (jqXHR, status, response) {
+                if (status == 'success') {
+                    showError(jqXHR.data.create.message);
+                } else {
+                    showError(jqXHR.data.create.message);
                 }
-            });
+            }).fail(function (jqXHR, testStatus, error) {
+                showError(error);
+            })
         });
     </script>
 </body>
