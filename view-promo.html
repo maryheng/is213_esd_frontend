@@ -164,7 +164,7 @@
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="promotable" width="100%"
                                             cellspacing="0">
-                                            <thead>
+                                            <!-- <thead>
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Name</th>
@@ -176,7 +176,7 @@
                                                     <th>Tiers</th>
                                                     <th>End Promo?</th>
                                                 </tr>
-                                            </thead>
+                                            </thead> -->
                                         </table>
                                     </div>
                                 </div>
@@ -250,6 +250,8 @@
     <script src="js/demo/datatables-demo.js"></script>
 
     <script>
+        var promotionsURL = "http://slippers.wtf:8000/promotions"
+
         // Helper function to display error message
         function showError(message) {
             // Display an error under the main container
@@ -259,45 +261,48 @@
         
         // TO-DO:
         // To END promotion
-        // $('')
 
-        // GET all promotions
-        $(async () => {
-            var serviceURL = "http://127.0.0.1:5100/retrieve";
+        var promoDataArr;
+        $.ajax({
+            url: promotionsURL,
+            type: 'POST',
+            data: JSON.stringify({ query: '{ promotions { code name discount message start end redemptions tiers } }' }),
+            contentType: "application/json",
+            dataType: 'json'
+        }).done(function(data) { 
 
-            try {
-                const response = await fetch(serviceURL, {
-                    method: 'GET'
-                });
+            var data = data.data.promotions
+            promoDataArr = jsonToArr(data);
 
-                const promotions = await response.json();
-                console.log(promotions);
+            // GET all promotions
+            $('#promotable').DataTable({
+                "data": promoDataArr,
+                "columns": [
+                    {title: "Code"},
+                    {title: "Name"},
+                    {title: "Discount (%)"},
+                    {title: "Message"},
+                    {title: "Start Date"},
+                    {title: "End Date"},
+                    {title: "Redemptions"},
+                    {title: "Tiers"}
+                ],
+            })
+        })
 
-                if (!promotions || !promotions.length) {
-                    showError("Promotion list is empty or undefined!")
-                } else {
-                    // for loop to setup all table rows with obtained promotions data
-                    var rows = "";
-                    for (const promo of promotions) {
-                        eachRow =
-                            "<td>" + promo.code + "</td>" +
-                            "<td>" + promo.name + "</td>" +
-                            "<td>" + promo.discount + "</td>" +
-                            "<td>" + promo.message + "</td>" +
-                            "<td>" + promo.start + "</td>" +
-                            "<td>" + promo.end + "</td>" +
-                            "<td>" + promo.redemptions + "</td>" +
-                            "<td>" + promo.tiers + "</td>" +
-                            "<td><button type='button' class='btn btn-danger'>End</button></td>";
-                        rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
-                    }
-                    // add all the rows to the table
-                    $('#promotable').append(rows);
-                }
-            } catch (error) {
-                showError("There is a problem retrieving promotions, please try again later. <br />" + error);
-            }
-        });
+        
+        /*
+        Helper function - Convert json object to list of lists
+        */
+        function jsonToArr(json) {
+            var result = []
+
+            json.forEach(arr => {
+                var values = Object.values(arr);
+                result.push(values);
+            });
+            return result;
+        }
     </script>
 
 </body>
