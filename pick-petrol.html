@@ -128,7 +128,7 @@
             <div class="col-lg-8 align-items-center justify-content-center">
               <div class="card text-white bg-primary mb-3 shadow mb-4">
                 <div class="card-body">
-                  <h4 class="h4 mb-0"><b>Pick your petrol</b></h4>
+                  <h4 class="h4 mb-0"><b>View Petrol</b></h4>
                   <hr>
                   <div id="petrolCard" class="row align-items-center justify-content-center ">
 
@@ -137,20 +137,19 @@
 
                   <!-- Select Petrol Multiselect -->
                   <div class="form-group">
-                    <label for="promoDetails">Promotion Details: </label>
-                    <select id="promoPicker" class="selectpicker" show-tick data-width="100%">
+                    <label for="petrolPicker">Pick your Petrol: </label>
+                    <select id="petrolPicker" class="selectpicker" show-tick data-width="100%">
                     </select>
-
                   </div>
                   <!-- Amount of Oil Form -->
-                  <h5 class="card-title">Amount of Oil</h5>
+                  <label for="oilAmountInput">How much oil to be pumped: </label>
                   <form class="user">
                     <div class="form-group">
                       <input type="text" class="form-control form-control-user" id="oilAmountInput"
                         placeholder="e.g. 10">
                     </div>
                     <div class="text-center">
-                      <button type="button" id="pumpOilBtn" class="btn btn-light">Pump</button>
+                      <button type="button" id="pumpOilBtn" class="btn btn-dark">Pump</button>
                     </div>
                   </form>
                 </div>
@@ -158,33 +157,48 @@
             </div>
           </div>
 
-          <!-- Select Rewards Section -->
-          <div class="row align-items-center justify-content-center" style="display:none" id="amtCard">
+          <!-- Select Points/Rewards Section -->
+          <div class="row align-items-center justify-content-center" id="rewardsCard" style="display:none">
             <div class="col-lg-6 align-items-center justify-content-center">
               <div class="card bg-light mb-3 shadow mb-4">
                 <div class="card-body">
-                  <h4 class="h4 mb-0"><b>Select Rewards</b></h4>
+                  <h4 class="h4 mb-0"><b>Redeem Points and/or Rewards</b></h4>
                   <hr>
-
-                  <p>HELLO</p>
+                  <form class="user">
+                    <div class="form-group">
+                      <label for="pointsInput">Redeem Points (100 points = $1 off)</label>
+                      <input type="text" class="form-control form-control-user" id="pointsInput" placeholder="e.g. 100">
+                    </div>
+                  </form>
+                  <!-- Select Rewards Multiselect -->
+                  <div class="form-group">
+                    <label for="rewardsPicker">Rewards: </label>
+                    <select id="rewardsPicker" class="selectpicker" show-tick data-width="100%">
+                    </select>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" id="topaymentBtn" class="btn btn-dark">Next to Payment</button>
                 </div>
               </div>
             </div>
-      
 
-          <!-- Select Payment Method -->
-
-            <div class="col-lg-6 align-items-center justify-content-center">
+            <!-- Select Payment Method -->
+            <div class="col-lg-6 align-items-center justify-content-center" id="payingCard" style="display:none">
               <div class="card bg-light mb-3 shadow mb-4">
                 <div class="card-body">
                   <h4 class="h4 mb-0"><b>Amount To Pay</b></h4>
                   <hr>
-
-                  <p>HELLO</p>
+                  <div id="paymentDetails">
+                    <p id="netAmount">Net Amount: <b>$<span></span></b></p>
+                    <p id="rewardPercentage">Reward Percentage: <b><span></span>%</b></p>
+                    <p id="redeemMoney">Total money redeemable from points: <b>$<span></span> off</b></p>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" id="paymentBtn" class="btn btn-info">Pay!</button>
+                  </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
         <!-- /.container-fluid -->
@@ -239,15 +253,8 @@
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
 
   <script>
     // Helper function to display error message
@@ -257,18 +264,27 @@
         .append("<label>" + message + "</label>");
     }
 
-    // GET petrol types from petrol.py
     let allOilTypes;
-    var getPetrolURL = 'http://127.0.0.1:5400/petrol';
-    var pumpOilURL = 'http://127.0.0.1:5400/pump';
-    $.ajax({
+    var getPetrolURL = 'http://slippers.wtf:8000/petrol';
+    var pumpOilURL = 'http://slippers.wtf:8000/pump';
+    var promotionsURL = "http://slippers.wtf:8000/promotions";
+    var paypalURL = "http://127.0.0.1:5111/paypal_payment/";
+
+    /*
+    GET petrol types and details
+    */
+    $.post({
         url: getPetrolURL,
+        dataType: 'json',
+        data: JSON.stringify({ query: '{ petrol { name rating cost } }' }),
+        contentType: "application/json",
         dataType: 'json'
       })
       .done(function (data, textStatus, jqXHR) {
-        allOilTypes = data;
+        console.log(data.data.petrol);
+        allOilTypes = data.data.petrol;
         // dynamically adds a card depending on the petrol types
-        data.forEach(result => {
+        allOilTypes.forEach(result => {
           let content = `
             <div class="col-sm-3">
                 <div class="card text-gray-800">
@@ -288,7 +304,7 @@
 
           // Append petrol type name to multiselect
           eachRow = "<option>" + result.name + "</option>";
-          $('#promoPicker').append(eachRow);
+          $('#petrolPicker').append(eachRow);
 
         })
       })
@@ -296,37 +312,114 @@
         showError('Error: ' + error);
       });
 
-    // Pump oil button -> jsonify data to send over to UPDATE oil amount
+    var totalamount = 0;
+    // After clicking the "pump" btn, petrol type and petrol amount will be sent to UPDATE pump api
     $("#pumpOilBtn").click(function () {
       var oilamount = $('#oilAmountInput').val();
       var oilname = $('select').val();
 
-      var body = JSON.stringify({
-        name: oilname,
-        amount: parseFloat(oilamount)
+      // var body = JSON.stringify({
+      //   name: oilname,
+      //   amount: parseFloat(oilamount)
+      // });
+      // console.log(body);
+      // /*
+      // UPDATE oil amount
+      // */
+      // $.ajax({
+      //     url: pumpOilURL,
+      //     type: 'PUT',
+      //     data: body,
+      //     dataType: 'json',
+      //     contentType: 'application/json'
+      //   })
+      //   .done(function (data, textStatus, jqXHR) {
+      //     totalamount = data.price;
+      //     console.log(data.price);
+      //     console.log("^^^^");
+      //   })
+      //   .fail(function (jqXHR, textStatus, error) {
+      //     showError('Error: ' + error);
+      //   });
+
+      $('#rewardsCard').show();
+    })
+
+    /* TO-BE DONE:
+    GET user's points and display
+    */
+
+    /*
+    GET all promotions - to be placed in multiselect
+    */
+    let allpromotions;
+    $.ajax({
+        url: promotionsURL,
+        dataType: 'json'
+      })
+      .done(function (data, textStatus, jqXHR) {
+        allpromotions = data;
+        data.forEach(promotion => {
+          eachRow = "<option>" + promotion.name + "</option>";
+          $('#rewardsPicker').append(eachRow);
+        })
+      })
+      .fail(function (jqXHR, textStatus, error) {
+        showError('Error: ' + error);
+        showError('Error: ' + jqXHR);
+        showError('Error: ' + textStatus);
+        
       });
 
-      // Update OIL amount
-      $(async () => {
-        try {
-          const response = await fetch(pumpOilURL, {
-            method: 'PUT',
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: body
-          });
+    // Display points to be redeemed, rewards percentage and net amount to pay
+    var transDetails;
+    $('#topaymentBtn').click(function () {
+      $('#payingCard').show();
 
-          const data = await response.json();
-          console.log(data);
-        } catch (error) {
-          console.log("ERROR BELOW!");
-          showError(error);
-        }
+      var rewardName = $('#rewardsPicker').val();
+      let selectedPromo = allpromotions.find(el => el.name === rewardName);
+      var rewardPercentage = selectedPromo.discount;
+      var pointsInput = parseInt($('#pointsInput').val()) / 100;
+
+      $('#netAmount span').text(totalamount);
+      $('#rewardPercentage span').text(rewardPercentage);
+      $('#redeemMoney span').text(pointsInput);
+
+      transDetails = JSON.stringify({
+        userid: 1, //FIXME: needs to be dynamic
+        amount: parseFloat(totalamount),
+        discount: parseFloat(pointsInput),
+        percentage: parseFloat(rewardPercentage)
       });
-
-      $('#amtCard').show();
     });
+
+
+    /*
+    1. POST userid, discount, percentage, net amount to paypal
+    redeem_pts_to_$$$ , rewards, oil amount
+    2. REDEEM promotions
+    */
+    $('#paymentBtn').click(function () {
+      console.log(transDetails);
+      console.log("in payment button function");
+      $.ajax({
+        url: paypalURL,
+        type: 'POST',
+        data: transDetails,
+        dataType: 'json',
+        contentType: 'application/json'
+      })
+      .done(function (data, textStatus, jqXHR) {
+        console.log("PAYMENT IS DONE!");
+        console.log(data);
+      })
+      .fail(function (jqXHR, data, textStatus) {
+        console.log(data);
+        console.log("error");
+        console.log(textStatus);
+      })
+    });
+
   </script>
 </body>
 
