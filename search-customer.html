@@ -167,7 +167,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">View Customers</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Search Customer</h1>
 
                     <div class="row">
                         <!-- DataTales Example -->
@@ -197,6 +197,20 @@
                             </div>
                         </div>
                     </div>
+                    <form class="user" id="promoForm">
+                        <div class="form-group">
+                            <label for="code">ID / Tier: </label>
+                            <input type="text" class="form-control form-control-user" id="code"
+                                placeholder="">
+                        </div>
+                        <div class="text-center">   
+                            <button type="button" id="searchTierBtn"
+                                class="btn btn-primary">Search By Tier</button>
+                
+                            <button type="button" id="searchIDBtn"
+                                class="btn btn-primary">Search By ID</button>
+                        </div>
+                    </form>
                     <div class="container" id="errorcontainer">
                         <label></label>
                     </div>
@@ -273,8 +287,68 @@
 
         var customersURL = "http://slippers.wtf:8000/customer";
 
+        let code;
         var cusomterDataArr;
-        // View All Customers
+
+        // Search by TIER
+        $('#searchTierBtn').click(function () {
+            $('#usertable').DataTable().destroy();
+            code = $('#code').val();
+            
+            // Send POST to customers
+            $.ajax({
+                url: customersURL,
+                type: 'POST',
+                data: JSON.stringify({ query: '{ getCustomers (tier: ' + code + ') { userID name email telehandle teleID point exp tier } }' }),
+                contentType: "application/json",
+                dataType: 'json'
+            })
+            .done(function(data, status, jqXHR) { 
+                console.log(data.data.getCustomers)
+                var data = data.data.getCustomers
+                cusomterDataArr = jsonToArr(data);
+
+                // GET all promotions
+                $('#usertable').DataTable({
+                    "data": cusomterDataArr
+                })
+                
+                if (data.length < 0) {
+                    showError("Something went wrong!");
+                }
+            })
+        })
+
+        // Search customers by ID
+        $('#searchIDBtn').click(function () {
+            $('#usertable').DataTable().destroy();
+            code = $('#code').val();
+            
+            // Send POST to customers
+            $.ajax({
+                url: customersURL,
+                type: 'POST',
+                data: JSON.stringify({ query: '{ retrieveCustomer (userID: ' + code + ') { userID name email telehandle teleID point exp tier } }' }),
+                contentType: "application/json",
+                dataType: 'json'
+            })
+            .done(function(data, status, jqXHR) { 
+                console.log(data.data.retrieveCustomer)
+                var data = data.data.retrieveCustomer
+                cusomterDataArr = jsonTo1Arr(data);
+
+                // GET all promotions
+                $('#usertable').DataTable({
+                    "data": cusomterDataArr
+                })
+                
+                if (data.length < 0) {
+                    showError("Something went wrong!");
+                }
+            })
+        })
+        
+        // First Load -- view all customers
         $.ajax({
             url: customersURL,
             type: 'POST',
@@ -307,6 +381,16 @@
                 var values = Object.values(arr);
                 result.push(values);
             });
+            return result;
+        }
+        /*
+        Helper function - Convert json object to list of lists
+        */
+        function jsonTo1Arr(json) {
+            var result = []
+            var values = Object.values(json);
+            result.push(values);
+
             return result;
         }
     </script>
