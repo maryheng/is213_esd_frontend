@@ -168,16 +168,20 @@
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Name</th>
-                                                    <th>Discount</th>
+                                                    <th>Discount (%)</th>
                                                     <th>Message</th>
-                                                    <th>Start</th>
-                                                    <th>End</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
                                                     <th>Redemptions</th>
                                                     <th>Tiers</th>
-                                                    <th>End Promo?</th>
                                                 </tr>
                                             </thead>
                                         </table>
+                                    </div>
+                                    <div class="container" id="endPromoContainer" style="display:none">
+                                        <div class="text-center">
+                                            <button type="button" id="endPromoBtn" class="btn btn-danger">End Promotion?</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -193,8 +197,9 @@
                             </form>
                         </div>
                     </div>
-
-
+                    <div class="container" id="errorcontainer">
+                        <label></label>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 
@@ -260,61 +265,73 @@
     <script src="js/demo/datatables-demo.js"></script>
 
     <script>
+        var promotionsURL = "http://slippers.wtf:8000/promotions";
+
         // Helper function to display error message
         function showError(message) {
             // Display an error under the main container
-            $('.container-fluid')
-                .append("<label>" + message + "</label>");
+            $('#errorcontainer label').text(message);
         }
-
-        // TO-DO:
-        // To END promotion
-        // $('')
 
         // GET specific promotion
         // TO-DO: clear table if search agn
+        var promoDataArr;
+        let code;
         $('#searchPromoBtn').click(function () {
-            var code = $('#code').val();
-            console.log(code);
+            $('#promotable').DataTable().destroy();
+            code = $('#code').val();
 
-            var serviceURL = "http://127.0.0.1:5100/retrieve/" + code;
-            $(async () => {
+            var promoDataArr;
+            $.ajax({
+                url: promotionsURL,
+                type: 'POST',
+                data: JSON.stringify({ query: '{ promotion (code: "' + code + '") { code name discount message start end redemptions tiers } }' }),
+                contentType: "application/json",
+                dataType: 'json'
+            }).done(function(data, status, jqXHR) { 
 
-                try {
-                    const response = await fetch(serviceURL, {
-                        method: 'GET'
-                    });
+                if (data.errors) {
+                    showError(data.errors[0].message);
+                } else {
+                    var data = data.data.promotion
+                    promoDataArr = jsonToArr(data);
 
-                    const promo = await response.json();
-                    console.log(promo);
-
-                    if (!promo) {
-                        showError("Promotion list is empty or undefined!")
-                    } else {
-                        // for loop to setup all table rows with obtained promotions data
-                        var rows = "";
-                            eachRow =
-                                "<td>" + promo.code + "</td>" +
-                                "<td>" + promo.name + "</td>" +
-                                "<td>" + promo.discount + "</td>" +
-                                "<td>" + promo.message + "</td>" +
-                                "<td>" + promo.start + "</td>" +
-                                "<td>" + promo.end + "</td>" +
-                                "<td>" + promo.redemptions + "</td>" +
-                                "<td>" + promo.tiers + "</td>" +
-                                "<td><button type='button' class='btn btn-danger'>End</button></td>";
-                            rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
-                        
-                        // add all the rows to the table
-                        $('#promotable').append(rows);
-                     }
-                } catch (error) {
-                    showError(
-                        "There is a problem retrieving promotions, please try again later. <br />" +
-                        error);
+                    // GET all promotions
+                    $('#promotable').DataTable({
+                        "data": promoDataArr
+                    })
                 }
-            });
+
+                $('#endPromoContainer').show();
+            })     
+
         });
+
+        // End Promotion for specific promo - by clicking on end promo button
+        $('#endPromoBtn').click(function() {
+            // send post request
+            $.post({
+                url: promotionsURL,
+                type: 'POST',
+                data: JSON.stringify({ query: '{ endPromo (code: "' + code + '") { message } }' }),
+                contentType: "application/json",
+                dataType: 'json'
+            }).done(function (data, status, jqXHR) {
+                console.log(data);
+                showError(data.data.endPromo.message)
+            })
+        })
+
+        /*
+        Helper function - Convert json object to list of lists
+        */
+        function jsonToArr(json) {
+            var result = []
+            var values = Object.values(json);
+            result.push(values);
+
+            return result;
+        }
     </script>
 
 </body>

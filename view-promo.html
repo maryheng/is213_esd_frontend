@@ -164,19 +164,18 @@
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="promotable" width="100%"
                                             cellspacing="0">
-                                            <!-- <thead>
+                                            <thead>
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Name</th>
-                                                    <th>Discount</th>
+                                                    <th>Discount (%)</th>
                                                     <th>Message</th>
-                                                    <th>Start</th>
-                                                    <th>End</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
                                                     <th>Redemptions</th>
                                                     <th>Tiers</th>
-                                                    <th>End Promo?</th>
                                                 </tr>
-                                            </thead> -->
+                                            </thead>
                                         </table>
                                     </div>
                                 </div>
@@ -276,17 +275,7 @@
 
             // GET all promotions
             $('#promotable').DataTable({
-                "data": promoDataArr,
-                "columns": [
-                    {title: "Code"},
-                    {title: "Name"},
-                    {title: "Discount (%)"},
-                    {title: "Message"},
-                    {title: "Start Date"},
-                    {title: "End Date"},
-                    {title: "Redemptions"},
-                    {title: "Tiers"}
-                ],
+                "data": promoDataArr
             })
         })
 
