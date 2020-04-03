@@ -13,7 +13,9 @@
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.css" rel="stylesheet">
@@ -24,61 +26,6 @@
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-          <!-- Sidebar - Brand -->
-          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-              <div class="sidebar-brand-icon rotate-n-15">
-                  <i class="fas fa-oil-can fa-3x"></i>
-              </div>
-              <div class="sidebar-brand-text mx-3">Jiayous Console</sup></div>
-          </a>
-
-          <!-- Divider -->
-          <hr class="sidebar-divider my-0">
-
-          <!-- Nav Item - Dashboard -->
-          <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                  <i class="fas fa-fw fa-tachometer-alt"></i>
-                  <span>Dashboard</span></a>
-          </li>
-
-          <!-- Nav Item - Promotions Menu -->
-          <li class="nav-item">
-              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                  aria-expanded="true" aria-controls="collapseTwo">
-                  <i class="fas fa-money-bill-alt"></i>
-                  <span>Promotion</span>
-              </a>
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                  <div class="bg-white py-2 collapse-inner rounded">
-                      <a class="collapse-item" href="view-promo.html">View All Promotions</a>
-                      <a class="collapse-item" href="search-promo.html">Search Promotion</a>
-                      <a class="collapse-item" href="create-promo.html">Create Promotion</a>
-                  </div>
-              </div>
-          </li>
-
-          <!-- Nav Item - Tables -->
-          <li class="nav-item">
-              <a class="nav-link" href="broadcast.html">
-                  <i class="fas fa-bullhorn"></i>
-                  <span>Broadcast</span></a>
-          </li>
-
-          <!-- Divider -->
-          <hr class="sidebar-divider d-none d-md-block">
-
-          <!-- Sidebar Toggler (Sidebar) -->
-          <div class="text-center d-none d-md-inline">
-              <button class="rounded-circle border-0" id="sidebarToggle"></button>
-          </div>
-
-      </ul>
-      <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -106,14 +53,17 @@
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -126,20 +76,23 @@
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ricardo</span>
                 <img class="img-profile rounded-circle" src="img/ricardo.jpeg">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="pick-petrol.html">
+                  <i class="fas fa-oil-can fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Pump Petrol
+                </a>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
-              </a>
+                </a>
               </div>
-          </li>
-
-
+            </li>
           </ul>
 
         </nav>
@@ -151,21 +104,20 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h2 mb-0 text-gray-800">My Account</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h4 mb-0 text-gray-800">Welcome Ricardo,</h1>
+            <h1 id="welcomeOutout" class="h4 mb-0 text-gray-800"></h1>
           </div>
 
           <!-- Loyalty Points -->
-            <div class="row">
+          <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-m font-weight-bold text-primary mb-1">Loyalty Points</div>
-                      <div class="h3 mb-0 font-weight-bold text-gray-800">100</div>
+                      <div class="text-m font-weight-bold text-primary mb-1">LOYALTY POINTS</div>
+                      <div id="pointsOutput" class="h3 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-money-check-alt fa-2x text-gray-300"></i>
@@ -174,161 +126,57 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-9">
-
-              <!-- Basic Card Example -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Available Rewards</h6>
-                </div>
-
-
-                <div class="container my-4">
-              
-                  <!--Carousel Wrapper-->
-                  <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-              
-                    <!--Controls-->
-                    <div class="controls-top">
-                      <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
-                      <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-m font-weight-bold text-primary mb-1">TIER</div>
+                      <div id="tierOutput" class="h3 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
-                    <!--/.Controls-->
-              
-                    <!--Slides-->
-                    <div class="carousel-inner" role="listbox">
-              
-                      <!--First slide-->
-                      <div class="carousel-item active">
-              
-                        <div class="row">
-                          <div class="col-md-4">
-                            <div class="card mb-2">
-                              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                alt="Card image cap">
-                              <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                  card's content.</p>
-                              </div>
-                            </div>
-                          </div>
-              
-                          <div class="col-md-4 clearfix d-none d-md-block">
-                            <div class="card mb-2">
-                              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                alt="Card image cap">
-                              <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                  card's content.</p>
-                              </div>
-                            </div>
-                          </div>
-              
-                          <div class="col-md-4 clearfix d-none d-md-block">
-                            <div class="card mb-2">
-                              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                alt="Card image cap">
-                              <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                  card's content.</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-              
-                      </div>
-                      <!--/.First slide-->
-              
-                      <!--Second slide-->
-                      <div class="carousel-item">
-              
-                        <div class="row">
-                          <div class="col-md-4">
-                            <div class="card mb-2">
-                              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(60).jpg"
-                                alt="Card image cap">
-                              <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                  card's content.</p>
-                              </div>
-                            </div>
-                          </div>
-              
-                          <div class="col-md-4 clearfix d-none d-md-block">
-                            <div class="card mb-2">
-                              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                alt="Card image cap">
-                              <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                  card's content.</p>
-                              </div>
-                            </div>
-                          </div>
-              
-                          <div class="col-md-4 clearfix d-none d-md-block">
-                            <div class="card mb-2">
-                              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                alt="Card image cap">
-                              <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                  card's content.</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-              
-                      </div>
-                      <!--/.Second slide-->
-              
+                    <div class="col-auto">
+                      <i class="fas fa-crown fa-2x text-gray-300"></i>
                     </div>
-                    <!--/.Slides-->
-              
                   </div>
-                  <!--/.Carousel Wrapper-->
-              
-              
                 </div>
-
               </div>
             </div>
+
 
           </div>
 
           <div class="row">
             <div class="col-lg-12">
               <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">Transaction History</h6>
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Transaction History</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Type</th>
+                          <th>Amount ($)</th>
+                          <th>Date Created</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Gold Petrol</td>
+                          <td>50</td>
+                          <td>01/01/2020</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                  <div class="card-body">
-                      <div class="table-responsive">
-                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                              <thead>
-                                  <tr>
-                                      <th>Type</th>
-                                      <th>Amount ($)</th>
-                                      <th>Date Created</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  <tr>
-                                      <td>Gold Petrol</td>
-                                      <td>50</td>
-                                      <td>01/01/2020</td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
+                </div>
               </div>
+            </div>
           </div>
-          </div>
+          <div class="container" id="errorcontainer">
+            <label></label>
+        </div>
         </div>
         <!-- /.container-fluid -->
 
@@ -357,7 +205,8 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -393,31 +242,46 @@
   <script src="js/demo/datatables-demo.js"></script>
 
   <script>
-    $("#myCarousel").on("slide.bs.carousel", function(e) {
-    var $e = $(e.relatedTarget);
-    var idx = $e.index();
-    var itemsPerSlide = 3;
-    var totalItems = $(".carousel-item").length;
-  
-    if (idx >= totalItems - (itemsPerSlide - 1)) {
-      var it = itemsPerSlide - (totalItems - idx);
-      for (var i = 0; i < it; i++) {
-        // append slides to end
-        if (e.direction == "left") {
-          $(".carousel-item")
-            .eq(i)
-            .appendTo(".carousel-inner");
-        } else {
-          $(".carousel-item")
-            .eq(0)
-            .appendTo($(this).find(".carousel-inner"));
-        }
-      }
+    // Helper function to display error message
+    function showError(message) {
+        // Display an error under the main container
+        $('#errorcontainer label').text(message);
     }
-  });
-  
+
+    var customersURL = "http://g6t3esd.team:8000/customer";
+    var transactionURL = "http://127.0.0.1:5400/";
+    var paypalURL = transactionURL + "paypal_history";
+    let userid = 3; //FIXME: needs to be dynamic
+
+    /*
+    Retrieve current user by userID
+    */
+    $.post({
+      url: customersURL,
+      data: JSON.stringify({ query: '{ retrieveCustomer (userID: ' + userid + ') { userID name email telehandle teleID point exp tier } }' }),
+      contentType: "application/json",
+      dataType: 'json'
+    })
+    .done(function (data, status, jqXHR) {
+      console.table(data.data.retrieveCustomer);
+      var user = data.data.retrieveCustomer;
+      $('#welcomeOutout').append("Welcome " + user.name + ",");
+      $('#pointsOutput').append(user.point);
+      $('#tierOutput').append(user.tier);
+    })
+
+    /*
+    Retrieve user's paypal history records
+    */  
+    $.post({
+      url: paypalURL,
+      data: JSON.stringify({ query: '{ retrieveCustomer (userID: ' + userid + ') { userID name email telehandle teleID point exp tier } }' }),
+      contentType: "application/json",
+      dataType: 'json'
+    })
+
+
   </script>
 </body>
 
 </html>
-

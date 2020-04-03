@@ -86,13 +86,9 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="/profile.html">
+                <a class="dropdown-item" href="index.html">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="/profile.html">
-                  <i class="fas fa-oil-can fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Pump Petrol
+                  Home
                 </a>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -111,20 +107,38 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h2 mb-0 text-gray-800">Welcome Ricardo,</h1>
+            <!-- <h1 class="h2 mb-0 text-gray-800">Welcome Ricardo,</h1> -->
           </div>
-          <!-- Loyalty Points -->
-          <div class="row">
 
-            <div class="col-lg-9">
-
-
+          <!-- Are you a member? Section -->
+          <div class="row align-items-center justify-content-center" id="membersection">
+            <div class="col-lg-8 align-items-center justify-content-center">
+              <!-- <div class="card bg-light mb-3 shadow mb-4"> -->
+              <div class="card-body">
+                <h4 class="h4 text-center"><b>Are you a member?</b></h4>
+                <div class="text-center">
+                  <button type="button" id="yesMember" class="btn btn-primary" value=true>Yes</button>
+                  <button type="button" id="noMember" class="btn btn-danger" value=false>No</button>
+                </div>
+                <br>
+              </div>
+              <!-- </div> -->
             </div>
-
+            <div class="col-lg-6" id="memberIDsection" style="display:none">
+              <label for="membershipID">Membership ID:</label>
+              <form class="user">
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user" id="memberinput" placeholder="">
+                </div>
+                <div class="text-center">
+                  <button type="button" id="memberBtn" class="btn btn-dark">Enter</button>
+                </div>
+              </form>
+            </div>
           </div>
 
           <!-- Pick Your Petrol Section -->
-          <div class="row align-items-center justify-content-center">
+          <div class="row align-items-center justify-content-center" style="display: none" id="petrolsection">
             <div class="col-lg-8 align-items-center justify-content-center">
               <div class="card text-white bg-primary mb-3 shadow mb-4">
                 <div class="card-body">
@@ -164,26 +178,36 @@
                 <div class="card-body">
                   <h4 class="h4 mb-0"><b>Redeem Points and/or Rewards</b></h4>
                   <hr>
+                  <!-- Display user's points -->
+                  <div class="text-center" id="userDetails">
+                  </div>
+                  <!-- Redeem Points section -->
                   <form class="user">
                     <div class="form-group">
                       <label for="pointsInput">Redeem Points (100 points = $1 off)</label>
                       <input type="text" class="form-control form-control-user" id="pointsInput" placeholder="e.g. 100">
                     </div>
                   </form>
-                  <!-- Select Rewards Multiselect -->
-                  <div class="form-group">
-                    <label for="rewardsPicker">Rewards: </label>
-                    <select id="rewardsPicker" class="selectpicker" show-tick data-width="100%">
-                    </select>
-                  </div>
+                  <!-- Enter promo code  -->
+                  <form class="user">
+                    <div class="form-group">
+                      <label for="promocode">Redeem Promotion Code</label>
+                      <input type="text" class="form-control form-control-user" id="promocode"
+                        placeholder="e.g. xmas99">
+                    </div>
+                  </form>
+
                   <div class="text-center">
                     <button type="button" id="topaymentBtn" class="btn btn-dark">Next to Payment</button>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Select Payment Method -->
-            <div class="col-lg-6 align-items-center justify-content-center" id="payingCard" style="display:none">
+          <!-- Select Payment Method -->
+          <div class="row align-items-center justify-content-center" id="payingCard" style="display:none">
+            <div class="col-lg-6 align-items-center justify-content-center">
               <div class="card bg-light mb-3 shadow mb-4">
                 <div class="card-body">
                   <h4 class="h4 mb-0"><b>Amount To Pay</b></h4>
@@ -192,100 +216,193 @@
                     <p id="netAmount">Net Amount: <b>$<span></span></b></p>
                     <p id="rewardPercentage">Reward Percentage: <b><span></span>%</b></p>
                     <p id="redeemMoney">Total money redeemable from points: <b>$<span></span> off</b></p>
+                    <p id="totalAmount">Total amount to be paid: <b>$<span></span></b></p>
                   </div>
-                  <div class="text-center">
-                    <button type="button" id="paymentBtn" class="btn btn-info">Pay!</button>
+                  <br>
+                  <div class="row text-center justify-content-center align-items-center">
+                    <form action="http://127.0.0.1:5400/pay" method="POST">
+                      <input id="hiddenuserid" type="hidden" name="userid" value=1>
+                      <input id="hiddenamount" type="hidden" name="amount" value=1>
+                      <input id="hiddendiscount" type="hidden" name="discount" value=0>
+                      <input id="hiddenpercentage" type="hidden" name="percentage" value=0>
+                      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_klEoDVYMnLG3iUovh2PWAb3M00DxE0VAWm" data-amount="" data-name="Demo Site"
+                        data-description="Widget"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto">
+                      </script>
+                    </form>
+                    <div style="margin-left: 2%;"></div>
+                    <button type="button" id="paypalBtn" class="btn btn-info">Pay by <b>PayPal</b></button>
+
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="container" id="errorcontainer">
+            <label></label>
+          </div>
+          <!-- /.container-fluid -->
         </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- End of Main Content -->
+        <!-- End of Main Content -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Jiayous 2020</span>
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright &copy; Jiayous 2020</span>
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+
+      </div>
+      <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
           </div>
         </div>
-      </footer>
-      <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 
-  <script>
-    // Helper function to display error message
-    function showError(message) {
-      // Display an error under the main container
-      $('.container-fluid')
-        .append("<label>" + message + "</label>");
-    }
+    <script src="https://js.stripe.com/v3/"></script>
 
-    let allOilTypes;
-    var getPetrolURL = 'http://slippers.wtf:8000/petrol';
-    var pumpOilURL = 'http://slippers.wtf:8000/pump';
-    var promotionsURL = "http://slippers.wtf:8000/promotions";
-    var paypalURL = "http://127.0.0.1:5111/paypal_payment/";
+    <script>
+      // Helper function to display error message
+      function showError(message) {
+        // Display an error under the main container
+        $('#errorcontainer label').text(message);
+      }
 
-    /*
-    GET petrol types and details
-    */
-    $.post({
-        url: getPetrolURL,
-        dataType: 'json',
-        data: JSON.stringify({ query: '{ petrol { name rating cost } }' }),
-        contentType: "application/json",
-        dataType: 'json'
+      let allOilTypes;
+      // URLs
+      var customersURL = "http://g6t3esd.team:8000/customer";
+      var petrolURL = 'http://g6t3esd.team:8000/petrol';
+      var promotionsURL = "http://g6t3esd.team:8000/promotions"
+      var transactionURL = "http://127.0.0.1:5400/";
+      var paypalURL = transactionURL + "paypal_payment";
+      var stripeURL = transactionURL + "pay"
+      var getstripekeyURL = transactionURL + "stripe"
+
+      /*
+      GET USER by ID
+      */
+      var userid = 3; // FIXME: needs to be dynamic!!!!!!
+      var userExperience;
+      var userTier;
+      var isMember;
+
+      /*
+      If user is MEMBER
+      */
+      $('#yesMember').click(function () {
+        isMember = $('#yesMember').val();
+        console.log(isMember);
+        $('#memberIDsection').show();
       })
-      .done(function (data, textStatus, jqXHR) {
-        console.log(data.data.petrol);
-        allOilTypes = data.data.petrol;
-        // dynamically adds a card depending on the petrol types
-        allOilTypes.forEach(result => {
-          let content = `
+
+      // After submitting member's ID,
+      $('#memberBtn').click(function () {
+        // Get customer's membership ID/userID
+        userid = $('#memberinput').val();
+        
+        // userid = 10 //FIXME: needs to by dynamic!!!!
+        /*
+        Retrieve customers details
+        */
+        $.post({
+            url: customersURL,
+            data: JSON.stringify({
+              query: '{ retrieveCustomer (userID: ' + userid + ') { point tier } }'
+            }),
+            contentType: "application/json",
+            dataType: 'json'
+          })
+          .done(function (data, status, jqXHR) {
+            var customerdata = data.data.retrieveCustomer
+            console.log(customerdata)
+
+            // assign values to user variable
+            userPoints = customerdata.point;
+            userTier = customerdata.tier;
+            console.log(userTier);
+
+            // if user doesn't exist -> error
+            if (userPoints == null && userTier == null) {
+              showError("No such user!");
+            } else {
+              $('#userDetails').append('<h4>You have <b>' + userPoints + '</b> loyalty points! </h4><br>');
+              if (data.length < 0) {
+                showError("Something went wrong!");
+              }
+              $('#petrolsection').show();
+              $('#membersection').hide();
+            }
+          })
+      })
+
+      /*
+      If user is NOT member
+      */
+      $('#noMember').click(function () {
+        isMember = $('#noMember').val();
+        console.log(isMember);
+        $('#petrolsection').show();
+        $('#membersection').hide();
+      })
+
+
+      /*
+      GET petrol types and details
+      */
+      $.post({
+          url: petrolURL,
+          dataType: 'json',
+          data: JSON.stringify({
+            query: '{ petrol { name rating cost } }'
+          }),
+          contentType: "application/json",
+          dataType: 'json'
+        })
+        .done(function (data, textStatus, jqXHR) {
+          console.log(data.data.petrol);
+          allOilTypes = data.data.petrol;
+          // dynamically adds a card depending on the petrol types
+          allOilTypes.forEach(result => {
+            let content = `
             <div class="col-sm-3">
                 <div class="card text-gray-800">
                   <div id="oil3" class="card-body">
@@ -300,127 +417,209 @@
                 </div>
               </div>
           `;
-          $("#petrolCard").append(content);
+            $("#petrolCard").append(content);
 
-          // Append petrol type name to multiselect
-          eachRow = "<option>" + result.name + "</option>";
-          $('#petrolPicker').append(eachRow);
+            // Append petrol type name to multiselect
+            eachRow = "<option>" + result.name + "</option>";
+            $('#petrolPicker').append(eachRow);
 
+          })
         })
+        .fail(function (jqXHR, textStatus, error) {
+          showError('Error: ' + error);
+        });
+
+      var totalamount;
+      let oilamount;
+      let oilname;
+      var totalamountForNon;
+      $("#pumpOilBtn").click(function () {
+        oilamount = $('#oilAmountInput').val();
+        oilname = $('#petrolPicker').val()
+
+        /*
+        UPDATE/PUMP oil amount -- return total amount
+        */
+        $.post({
+            url: petrolURL,
+            data: JSON.stringify({
+              query: '{ pump (name: "' + oilname + '", amount: ' + oilamount + ') { message price } }'
+            }),
+            dataType: 'json',
+            contentType: 'application/json'
+          })
+          .done(function (data, textStatus, jqXHR) {
+            console.log(data)
+            totalamount = data.data.pump.price;
+            totalamount = totalamount.toFixed(2);
+            console.log(totalamount)
+            // data.data.pump.message -- error 
+            if (data.data.pump.message == "Success!") {
+              showError(data.data.pump.message);
+              console.log(isMember);
+              if (isMember === "true") {
+                $('#rewardsCard').show();
+              } else {
+                $('#rewardsCard').remove();
+                $('#payingCard').show();
+                totalamountForNon = totalamount;
+
+                $('#netAmount span').text(totalamountForNon);
+                $('#rewardPercentage').hide();
+                $('#redeemMoney').hide();
+                $('#totalAmount span').text(totalamountForNon);
+                transDetailsForNon = JSON.stringify({
+                  userid: userid,
+                  amount: parseFloat(totalamountForNon)
+                });
+
+                $('#hiddenuserid').val(userid);
+                $('#hiddenamount').val(parseFloat(totalamount));
+                $('#hiddendiscount').val();
+                $('#hiddenpercentage').val();
+              }
+            } else {
+              showError(data.data.pump.message);
+            }
+          })
+          .fail(function (jqXHR, textStatus, error) {
+            showError('Error: ' + error);
+          });
+
       })
-      .fail(function (jqXHR, textStatus, error) {
-        showError('Error: ' + error);
-      });
 
-    var totalamount = 0;
-    // After clicking the "pump" btn, petrol type and petrol amount will be sent to UPDATE pump api
-    $("#pumpOilBtn").click(function () {
-      var oilamount = $('#oilAmountInput').val();
-      var oilname = $('select').val();
+      // Display points to be redeemed, rewards percentage and net amount to pay
+      var transDetails;
+      $('#topaymentBtn').click(function () {
+        console.log(totalamount)
+        var promocode = $('#promocode').val();
+        var pointsInput = parseInt($('#pointsInput').val()) / 100;
 
-      // var body = JSON.stringify({
-      //   name: oilname,
-      //   amount: parseFloat(oilamount)
-      // });
-      // console.log(body);
-      // /*
-      // UPDATE oil amount
-      // */
-      // $.ajax({
-      //     url: pumpOilURL,
-      //     type: 'PUT',
-      //     data: body,
-      //     dataType: 'json',
-      //     contentType: 'application/json'
-      //   })
-      //   .done(function (data, textStatus, jqXHR) {
-      //     totalamount = data.price;
-      //     console.log(data.price);
-      //     console.log("^^^^");
-      //   })
-      //   .fail(function (jqXHR, textStatus, error) {
-      //     showError('Error: ' + error);
-      //   });
+        /*
+        Redeem Points
+        */  
+        $.post({
+            url: customerURL,
+            data: JSON.stringify({
+              query: '{ use (userID: ' + userid + ', points: ' + pointsInput + ') { status message deduction} }'
+            }),
+            contentType: "application/json",
+            dataType: 'json'
+          })
+          .done(function (data, status, jqXHR) {
+            console.log(data);
+            console.log("REDEEMED points");
+          })
 
-      $('#rewardsCard').show();
-    })
-
-    /* TO-BE DONE:
-    GET user's points and display
-    */
-
-    /*
-    GET all promotions - to be placed in multiselect
-    */
-    let allpromotions;
-    $.ajax({
-        url: promotionsURL,
-        dataType: 'json'
-      })
-      .done(function (data, textStatus, jqXHR) {
-        allpromotions = data;
-        data.forEach(promotion => {
-          eachRow = "<option>" + promotion.name + "</option>";
-          $('#rewardsPicker').append(eachRow);
+        /*
+        Redeem Promotion code
+        */
+        $.post({
+          url: promotionsURL,
+          data: JSON.stringify({
+            query: '{ redeem (code: "' + promocode + '", userId: ' + userid + ', tier: ' + userTier +
+              ' ) { discount, message } }'
+          }),
+          contentType: "application/json",
+          dataType: 'json'
+        }).done(function (data, status, jqXHR) {
+          console.log("PROMOTION IS REDEEEM!");
+          console.log(data);
+        }).fail(function (error, status, jqXHR) {
+          console.log(error)
         })
-      })
-      .fail(function (jqXHR, textStatus, error) {
-        showError('Error: ' + error);
-        showError('Error: ' + jqXHR);
-        showError('Error: ' + textStatus);
-        
+
+        $('#payingCard').show();
+
+        var rewardName = $('#rewardsPicker').val();
+        // let selectedPromo = allpromotions.find(el => el.name === rewardName);
+        // var rewardPercentage = selectedPromo.discount;
+
+        $('#netAmount span').text();
+        $('#rewardPercentage span').text(rewardPercentage);
+        $('#redeemMoney span').text(pointsInput);
+
+        console.log("---------")
+        console.log(totalamount)
+        console.log(rewardPercentage)
+        console.log(pointsInput)
+
+        transDetails = JSON.stringify({
+          userid: userid,
+          amount: parseFloat(totalamount),
+          discount: parseFloat(pointsInput),
+          percentage: parseFloat(rewardPercentage)
+        });
+
+        fullamount = ((parseFloat(totalamount) - parseFloat(pointsInput)) * (100 - parseInt(rewardPercentage)) /
+          100);
+        $('#totalAmount span').text(fullamount);
+        console.log("this is the total amount: " + fullamount);
+
+
+        $('#hiddenuserid').val(userid);
+        $('#hiddenamount').val(parseFloat(totalamount));
+        $('#hiddendiscount').val(parseFloat(pointsInput));
+        $('#hiddenpercentage').val(parseFloat(rewardPercentage));
       });
 
-    // Display points to be redeemed, rewards percentage and net amount to pay
-    var transDetails;
-    $('#topaymentBtn').click(function () {
-      $('#payingCard').show();
+      if (isMember === "true") {
 
-      var rewardName = $('#rewardsPicker').val();
-      let selectedPromo = allpromotions.find(el => el.name === rewardName);
-      var rewardPercentage = selectedPromo.discount;
-      var pointsInput = parseInt($('#pointsInput').val()) / 100;
+      } else {
+        transDetailsForNonMember = JSON.stringify({
+          userid: userid,
+          amount: parseFloat(totalamount)
+        });
+        $('#netAmount span').text(transDetailsForNonMember);
+      }
 
-      $('#netAmount span').text(totalamount);
-      $('#rewardPercentage span').text(rewardPercentage);
-      $('#redeemMoney span').text(pointsInput);
+      // Pay by Paypal
+      $('#paypalBtn').click(function () {
+        console.log(transDetails);
+        if (isMember === "false") {
+          transDetails = transDetailsForNon;
+        }
 
-      transDetails = JSON.stringify({
-        userid: 1, //FIXME: needs to be dynamic
-        amount: parseFloat(totalamount),
-        discount: parseFloat(pointsInput),
-        percentage: parseFloat(rewardPercentage)
+        $.post({
+            url: paypalURL,
+            data: transDetails,
+            dataType: 'json',
+            contentType: 'application/json'
+          })
+          .done(function (data, status, jqXHR) {
+            // Redirect user to paypal sandbox login
+            console.log(data);
+            window.open(data, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
+
+            // Redirect user to index.html
+          })
+          .fail(function (data, status, jqXHR) {
+            console.log(data);
+            console.log("error!");
+          })
       });
-    });
 
-
-    /*
-    1. POST userid, discount, percentage, net amount to paypal
-    redeem_pts_to_$$$ , rewards, oil amount
-    2. REDEEM promotions
-    */
-    $('#paymentBtn').click(function () {
-      console.log(transDetails);
-      console.log("in payment button function");
+      /*
+      Pay by Stripe
+      */
+      // 1. get pubkey
+      // 2. post to /pay
+      /*
+      Get public key from Stripe
+      */
+      var pub_key;
       $.ajax({
-        url: paypalURL,
-        type: 'POST',
-        data: transDetails,
+        url: getstripekeyURL,
+        method: 'GET',
         dataType: 'json',
         contentType: 'application/json'
+      }).done(function (response, status, jqXHR) {
+        console.log(response.pubkey);
+        pub_key = response.pubkey;
+      }).fail(function (error, status, jqXHR) {
+        showError(error);
       })
-      .done(function (data, textStatus, jqXHR) {
-        console.log("PAYMENT IS DONE!");
-        console.log(data);
-      })
-      .fail(function (jqXHR, data, textStatus) {
-        console.log(data);
-        console.log("error");
-        console.log(textStatus);
-      })
-    });
-
-  </script>
+    </script>
 </body>
 
 </html>
