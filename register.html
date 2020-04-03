@@ -126,9 +126,25 @@
     })
 
     $('#googleBtn').click(function() {
+      window.open("https://g6t3esd.team/google_register", "_blank");
+
+      setTimeout(continueExecution, 15000 );
       
-      var win  = window.open('https://g6t3esd.team/google_register', "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
     })
+
+    function continueExecution() {
+      $.ajax({
+        url: "https://g6t3esd.team/middleman",
+        method: 'GET'
+      }).done(function(data, status, jqXHR) {
+        console.log("HERE!!!!!KMKFMKEFKEM");
+        console.log(data);
+
+        $('#nameInput').val(data.name);
+        $('#emailInput').val(data.email);
+
+      })
+    }
   </script>
 
 </body>
