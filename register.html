@@ -52,9 +52,12 @@
                   Register Account
                 </button>
                 <hr>
-                <a href="index.html" class="btn btn-google btn-user btn-block">
+                <!-- <a href="https://g6t3esd.team/google_login" class="btn btn-google btn-user btn-block">
                   <i class="fab fa-google fa-fw"></i> Register with Google
-                </a>
+                </a> -->
+                <button type="button" class="btn btn-primary btn-user btn-block" id="googleBtn">
+                  <i class="fab fa-google fa-fw"></i> Register with Google
+                </button>
               </form>
               <hr>
               <div class="text-center">
@@ -120,6 +123,11 @@
         console.log(error);
       }) 
       
+    })
+
+    $('#googleBtn').click(function() {
+      
+      var win  = window.open('https://g6t3esd.team/google_register', "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
     })
   </script>
 

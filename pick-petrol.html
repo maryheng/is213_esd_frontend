@@ -311,7 +311,7 @@
       var customersURL = "http://g6t3esd.team:8000/customer";
       var petrolURL = 'http://g6t3esd.team:8000/petrol';
       var promotionsURL = "http://g6t3esd.team:8000/promotions"
-      var transactionURL = "http://g6t3esd.team:8000/";
+      var transactionURL = "http://127.0.0.1:5400/";
       var paypalURL = transactionURL + "paypal_payment";
       var stripeURL = transactionURL + "pay"
       var getstripekeyURL = transactionURL + "stripe"
@@ -469,7 +469,7 @@
                 $('#redeemMoney').hide();
                 $('#totalAmount span').text(totalamountForNon);
                 transDetailsForNon = JSON.stringify({
-                  userid: userid,
+                  userid: 3, //FIXME: REALISE NO USER??????
                   amount: parseFloat(totalamountForNon)
                 });
 
@@ -477,6 +477,8 @@
                 $('#hiddenamount').val(parseFloat(totalamount));
                 $('#hiddendiscount').val();
                 $('#hiddenpercentage').val();
+
+                console.log(transDetailsForNon);
               }
             } else {
               showError(data.data.pump.message);
@@ -544,61 +546,59 @@
         }).done(function (data, status, jqXHR) {
           console.log("promotion discount -> " + data.data.promotion.discount);
           promodiscount = data.data.promotion.discount
+          var rewardName = $('#rewardsPicker').val();
+
+          $('#netAmount span').text(totalamount);
+          $('#rewardPercentage span').text(promodiscount);
+          $('#redeemMoney span').text(pointsInput);
+
+          // check if it's member
+
+          
+          transDetails = JSON.stringify({
+            userid: userid,
+            amount: parseFloat(totalamount),
+            discount: parseFloat(pointsInput),
+            percentage: parseFloat(promodiscount)
+          });
+  
+          fullamount = ((parseFloat(totalamount) - parseFloat(pointsInput)) * (100 - parseInt(promodiscount)) /
+            100);
+          $('#totalAmount span').text(fullamount);
+          console.log("this is the total amount: " + fullamount);
+  
+  
+          $('#hiddenuserid').val(userid);
+          $('#hiddenamount').val(parseFloat(totalamount));
+          $('#hiddendiscount').val(parseFloat(pointsInput));
+          $('#hiddenpercentage').val(parseFloat(promodiscount));
+          
+ 
         }).fail(function (error, status, jqXHR) {
           console.log(error)
         })
 
         $('#payingCard').show();
 
-        var rewardName = $('#rewardsPicker').val();
-
-        $('#netAmount span').text(totalamount);
-        $('#rewardPercentage span').text(promodiscount);
-        $('#redeemMoney span').text(pointsInput);
-
         console.log("---------")
         console.log(totalamount)
         console.log(promodiscount)
         console.log(pointsInput)
-
-        transDetails = JSON.stringify({
-          userid: userid,
-          amount: parseFloat(totalamount),
-          discount: parseFloat(pointsInput),
-          percentage: parseFloat(promodiscount)
-        });
-
-        fullamount = ((parseFloat(totalamount) - parseFloat(pointsInput)) * (100 - parseInt(promodiscount)) /
-          100);
-        $('#totalAmount span').text(fullamount);
-        console.log("this is the total amount: " + fullamount);
-
-
-        $('#hiddenuserid').val(userid);
-        $('#hiddenamount').val(parseFloat(totalamount));
-        $('#hiddendiscount').val(parseFloat(pointsInput));
-        $('#hiddenpercentage').val(parseFloat(promodiscount));
       });
 
-      if (isMember === "true") {
-
-      } else {
-        transDetailsForNonMember = JSON.stringify({
-          userid: userid,
-          amount: parseFloat(totalamount)
-        });
-        $('#netAmount span').text(transDetailsForNonMember);
-      }
 
       // Pay by Paypal
       $('#paypalBtn').click(function () {
         console.log(transDetails);
+        console.log(userid);
         if (isMember === "false") {
           transDetails = transDetailsForNon;
+        } else {
+          transDetails = transDetails;
         }
 
         $.post({
-            url: paypalURL,
+            url: "http://127.0.0.1:5400/paypal_payment",
             data: transDetails,
             dataType: 'json',
             contentType: 'application/json'
@@ -609,6 +609,8 @@
             window.open(data, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
 
             // Redirect user to index.html
+            location.reload();
+            return false;
           })
           .fail(function (data, status, jqXHR) {
             console.log(data);
