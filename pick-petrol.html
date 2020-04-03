@@ -81,8 +81,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ricardo</span>
-                <img class="img-profile rounded-circle" src="img/ricardo.jpeg">
+                <span id="namesection" class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -312,7 +311,7 @@
       var customersURL = "http://g6t3esd.team:8000/customer";
       var petrolURL = 'http://g6t3esd.team:8000/petrol';
       var promotionsURL = "http://g6t3esd.team:8000/promotions"
-      var transactionURL = "http://127.0.0.1:5400/";
+      var transactionURL = "http://g6t3esd.team:8000/";
       var paypalURL = transactionURL + "paypal_payment";
       var stripeURL = transactionURL + "pay"
       var getstripekeyURL = transactionURL + "stripe"
@@ -320,7 +319,7 @@
       /*
       GET USER by ID
       */
-      var userid = 3; // FIXME: needs to be dynamic!!!!!!
+      var userid;
       var userExperience;
       var userTier;
       var isMember;
@@ -338,15 +337,14 @@
       $('#memberBtn').click(function () {
         // Get customer's membership ID/userID
         userid = $('#memberinput').val();
-        
-        // userid = 10 //FIXME: needs to by dynamic!!!!
+      
         /*
         Retrieve customers details
         */
         $.post({
             url: customersURL,
             data: JSON.stringify({
-              query: '{ retrieveCustomer (userID: ' + userid + ') { point tier } }'
+              query: '{ retrieveCustomer (userID: ' + userid + ') { name point tier } }'
             }),
             contentType: "application/json",
             dataType: 'json'
@@ -358,6 +356,8 @@
             // assign values to user variable
             userPoints = customerdata.point;
             userTier = customerdata.tier;
+            var username = customerdata.name;
+            $('#namesection').text(username)
             console.log(userTier);
 
             // if user doesn't exist -> error
@@ -490,16 +490,17 @@
 
       // Display points to be redeemed, rewards percentage and net amount to pay
       var transDetails;
+      var pointsInput;
       $('#topaymentBtn').click(function () {
         console.log(totalamount)
         var promocode = $('#promocode').val();
-        var pointsInput = parseInt($('#pointsInput').val()) / 100;
+        pointsInput = parseInt($('#pointsInput').val()) / 100;
 
         /*
         Redeem Points
         */  
         $.post({
-            url: customerURL,
+            url: customersURL,
             data: JSON.stringify({
               query: '{ use (userID: ' + userid + ', points: ' + pointsInput + ') { status message deduction} }'
             }),
@@ -529,29 +530,45 @@
           console.log(error)
         })
 
+        /*
+        Retrieve Promotion by CODE
+        */
+        var promodiscount;
+        $.post({
+          url: promotionsURL,
+          data: JSON.stringify({
+            query: '{ promotion (code: "' + promocode + '" ) { discount } }'
+          }),
+          contentType: "application/json",
+          dataType: 'json'
+        }).done(function (data, status, jqXHR) {
+          console.log("promotion discount -> " + data.data.promotion.discount);
+          promodiscount = data.data.promotion.discount
+        }).fail(function (error, status, jqXHR) {
+          console.log(error)
+        })
+
         $('#payingCard').show();
 
         var rewardName = $('#rewardsPicker').val();
-        // let selectedPromo = allpromotions.find(el => el.name === rewardName);
-        // var rewardPercentage = selectedPromo.discount;
 
-        $('#netAmount span').text();
-        $('#rewardPercentage span').text(rewardPercentage);
+        $('#netAmount span').text(totalamount);
+        $('#rewardPercentage span').text(promodiscount);
         $('#redeemMoney span').text(pointsInput);
 
         console.log("---------")
         console.log(totalamount)
-        console.log(rewardPercentage)
+        console.log(promodiscount)
         console.log(pointsInput)
 
         transDetails = JSON.stringify({
           userid: userid,
           amount: parseFloat(totalamount),
           discount: parseFloat(pointsInput),
-          percentage: parseFloat(rewardPercentage)
+          percentage: parseFloat(promodiscount)
         });
 
-        fullamount = ((parseFloat(totalamount) - parseFloat(pointsInput)) * (100 - parseInt(rewardPercentage)) /
+        fullamount = ((parseFloat(totalamount) - parseFloat(pointsInput)) * (100 - parseInt(promodiscount)) /
           100);
         $('#totalAmount span').text(fullamount);
         console.log("this is the total amount: " + fullamount);
@@ -560,7 +577,7 @@
         $('#hiddenuserid').val(userid);
         $('#hiddenamount').val(parseFloat(totalamount));
         $('#hiddendiscount').val(parseFloat(pointsInput));
-        $('#hiddenpercentage').val(parseFloat(rewardPercentage));
+        $('#hiddenpercentage').val(parseFloat(promodiscount));
       });
 
       if (isMember === "true") {

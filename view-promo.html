@@ -273,10 +273,9 @@
         // Helper function to display error message
         function showError(message) {
             // Display an error under the main container
-            $('.container-fluid')
-                .append("<label>" + message + "</label>");
+            $('#errorcontainer label').text(message);
         }
-        
+
         // TO-DO:
         // To END promotion
 

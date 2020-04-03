@@ -39,47 +39,35 @@
               <form class="user">
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
+                    <input type="text" class="form-control form-control-user" id="nameInput" placeholder="Name">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
+                    <input type="text" class="form-control form-control-user" id="telehandleInput" placeholder="Telegram Handle">
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
+                  <input type="email" class="form-control form-control-user" id="emailInput" placeholder="Email Address">
                 </div>
-                <div class="form-group row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
-                  </div>
-                </div>
-                <a href="login.html" class="btn btn-primary btn-user btn-block">
+                <button type="button" class="btn btn-primary btn-user btn-block" id="registerBtn">
                   Register Account
-                </a>
+                </button>
                 <hr>
                 <a href="index.html" class="btn btn-google btn-user btn-block">
                   <i class="fab fa-google fa-fw"></i> Register with Google
                 </a>
-                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                  <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                </a>
               </form>
               <hr>
               <div class="text-center">
-                <a class="small" href="forgot-password.html">Forgot Password?</a>
-              </div>
-              <div class="text-center">
                 <a class="small" href="login.html">Already have an account? Login!</a>
+              </div>
+              <div class="container" id="errorcontainer">
+                <label></label>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- Bootstrap core JavaScript-->
@@ -91,6 +79,49 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <script>
+
+    // URLs
+    var customersURL = "http://g6t3esd.team:8000/customer";
+
+      // Helper function to display error message
+      function showError(message) {
+        // Display an error under the main container
+        $('#errorcontainer label').text(message);
+      }
+    
+    // Upon submitting Register Button -> Create User
+    $('#registerBtn').click(function () {
+      var name = $('#nameInput').val();
+      var telehandle = $('#telehandleInput').val();
+      var email = $('#emailInput').val();
+
+      console.log("in!")
+      $.post({
+        url: customersURL,
+        data: JSON.stringify({
+          query: '{ register (name: "' + name + '", email: "' + email + '", telehandle: "' + telehandle + '") { userID name email telehandle teleID point exp tier message } }'
+        }),
+        contentType: "application/json",
+        dataType: 'json'
+      }).done (function (data, status, jqXHR) {
+        console.log(data.data);
+        data = data.data.register
+        message = data.message
+
+        // if not successful
+        if (message == null) {
+          showError("Please login at the login page!")
+        } else {
+          showError(message)
+        }
+      }).fail (function (error, status, jqXHR) {
+        console.log(error);
+      }) 
+      
+    })
+  </script>
 
 </body>
 

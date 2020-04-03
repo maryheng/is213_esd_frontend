@@ -282,7 +282,7 @@
 
     <script>
         var promotionsURL = "http://g6t3esd.team:8000/promotions"
-        var notifyURL = "http://127.0.0.1:5200/sendNotification";
+        var notifyURL = "http://g6t3esd.team:8000/notify";
 
         // Helper function to display error message
         function showError(message) {
@@ -341,11 +341,17 @@
                 contentType: 'application/json'
             })
             .done(function (data, textStatus, jqXHR) {
-                console.log(data);
-                console.log("ME HERE!")
+                console.log(textStatus);
+                
+                if (textStatus == "success") {
+                    showError("Notified relevant tiers!");
+                } else {
+                    showError("Something went wrong!");
+                }
             })
             .fail(function (jqXHR, textStatus, error) {
-                console.log(error);
+                // showError(error);
+                showError(textStatus);
             })
         });
     </script>
