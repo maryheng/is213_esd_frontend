@@ -86,6 +86,8 @@
   <script>
 
     // URLs
+    var name;
+    var email;
     var customersURL = "http://g6t3esd.team:8000/customer";
 
       // Helper function to display error message
@@ -99,7 +101,9 @@
       var name = $('#nameInput').val();
       var telehandle = $('#telehandleInput').val();
       var email = $('#emailInput').val();
-
+      console.log(name)
+      console.log(email)
+      console.log(telehandle)
       console.log("in!")
       $.post({
         url: customersURL,
@@ -118,6 +122,7 @@
           showError("Please login at the login page!")
         } else {
           showError(message)
+          window.location.replace("/login.html");
         }
       }).fail (function (error, status, jqXHR) {
         console.log(error);
@@ -140,9 +145,10 @@
         console.log("HERE!!!!!KMKFMKEFKEM");
         console.log(data);
 
-        $('#nameInput').val(data.name);
-        $('#emailInput').val(data.email);
-
+        name = data.name;
+        email = data.email
+        $('#nameInput').val(name);
+        $('#emailInput').val(email);
       })
     }
   </script>
